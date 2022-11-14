@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
 
-RUN npm clean-install
+RUN yarn install
 
 COPY --chown=node:node . .
 
@@ -26,7 +26,7 @@ RUN npm run build
 
 ENV NODE_ENV production
 
-RUN npm clean-install --only=production
+RUN yarn install --production
 
 USER node
 

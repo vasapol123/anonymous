@@ -8,6 +8,13 @@ import { ViewService } from './view.service';
 export class ViewController {
   constructor(private viewService: ViewService) {}
 
+  async handler(req: Request, res: Response) {
+    const parsedUrl = parse(req.url, true);
+    await this.viewService
+      .getNextServer()
+      .render(req, res, parsedUrl.pathname, parsedUrl.query);
+  }
+
   @Get('/')
   public async index(@Req() req: Request, @Res() res: Response): Promise<void> {
     const parsedUrl = parse(req.url, true);
