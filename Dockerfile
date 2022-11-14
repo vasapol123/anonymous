@@ -9,6 +9,8 @@ RUN yarn install
 
 COPY --chown=node:node . .
 
+RUN npm run prisma:generate
+
 USER node
 
 # BUILD FOR PRODUCTION
