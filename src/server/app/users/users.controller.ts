@@ -13,5 +13,5 @@ export class UsersController {
   @ApiResponse({ status: 201, description: 'Successfully create new user' })
   public async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.createUser(createUserDto);
-  } 
+  }
 }

@@ -18,7 +18,7 @@ export class ViewController {
   @Get('/')
   public async index(@Req() req: Request, @Res() res: Response): Promise<void> {
     const parsedUrl = parse(req.url, true);
-    const serverSideProps = { dataFromController: 'ABC' }
+    const serverSideProps = { dataFromController: 'ABC' };
 
     await this.viewService
       .getNextServer()
@@ -31,7 +31,10 @@ export class ViewController {
   }
 
   @Get('_next*')
-  public async assets(@Req() req: Request, @Res() res: Response): Promise<void> {
+  public async assets(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<void> {
     const parsedUrl = parse(req.url, true);
     await this.viewService
       .getNextServer()

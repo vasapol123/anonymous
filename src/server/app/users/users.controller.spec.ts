@@ -10,8 +10,8 @@ describe('UsersController', () => {
       return {
         id: Date.now(),
         ...dto,
-      }
-    })
+      };
+    }),
   };
 
   beforeEach(async () => {
@@ -34,15 +34,14 @@ describe('UsersController', () => {
     it('should create a user', async () => {
       const createUserDto = {
         email: 'example@test.com',
-        password: '1234'
+        password: '1234',
       };
-  
-      expect(await controller.createUser(createUserDto))
-        .toEqual({
-          id: expect.any(Number),
-          ...createUserDto,
-        })
-  
+
+      expect(await controller.createUser(createUserDto)).toEqual({
+        id: expect.any(Number),
+        ...createUserDto,
+      });
+
       expect(mockUsersService.createUser).toHaveBeenCalledWith(createUserDto);
     });
   });

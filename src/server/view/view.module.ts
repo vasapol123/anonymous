@@ -7,6 +7,5 @@ import { ViewService } from './view.service';
   imports: [],
   controllers: [ViewController],
   providers: [ViewService],
-
 })
 export class ViewModule {}

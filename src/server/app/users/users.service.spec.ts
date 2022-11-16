@@ -9,11 +9,13 @@ describe('UsersService', () => {
 
   const mockPrismaService = {
     user: {
-      create: jest.fn().mockImplementation(
-        user => Promise.resolve({ id: Date.now(), ...(user.data) })
-      )
-    }
-  }
+      create: jest
+        .fn()
+        .mockImplementation((user) =>
+          Promise.resolve({ id: Date.now(), ...user.data }),
+        ),
+    },
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,8 +23,8 @@ describe('UsersService', () => {
         UsersService,
         {
           provide: PrismaService,
-          useValue: mockPrismaService
-        }
+          useValue: mockPrismaService,
+        },
       ],
     }).compile();
 
@@ -37,17 +39,16 @@ describe('UsersService', () => {
     it('should create a new user record and return that', async () => {
       const createUserDto: CreateUserDto = {
         email: 'example@test.com',
-        password: '1234'
-      }
-  
-      expect(await service.createUser(createUserDto))
-        .toEqual({
-          id: expect.any(Number),
-          email: createUserDto.email,
-          hashedPassword: expect.not.stringMatching(
-            new RegExp(`^${createUserDto.password}$`, 'g'
-            )),
-        })
+        password: '1234',
+      };
+
+      expect(await service.createUser(createUserDto)).toEqual({
+        id: expect.any(Number),
+        email: createUserDto.email,
+        hashedPassword: expect.not.stringMatching(
+          new RegExp(`^${createUserDto.password}$`, 'g'),
+        ),
+      });
     });
   });
 });
