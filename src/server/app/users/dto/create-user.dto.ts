@@ -9,5 +9,5 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  password: string;
+  hashedPassword: string;
 }
