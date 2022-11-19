@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
@@ -32,9 +33,9 @@ describe('UsersController', () => {
 
   describe('createUser', () => {
     it('should create a user', async () => {
-      const createUserDto = {
+      const createUserDto: CreateUserDto = {
         email: 'example@test.com',
-        password: '1234',
+        hashedPassword: 'fakeHashedPassword',
       };
 
       expect(await controller.createUser(createUserDto)).toEqual({
