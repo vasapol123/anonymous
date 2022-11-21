@@ -9,14 +9,14 @@ import { Tokens } from '../tokens/interface/tokens.interface';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UsersService,
+    private readonly usersService: UsersService,
     private readonly tokenService: TokensService,
   ) {}
 
   public async signupLocal(authDto: AuthDto): Promise<Tokens> {
     const hashedPassword = await argon2.hash(authDto.password);
 
-    const user = await this.userService.createUser({
+    const user = await this.usersService.createUser({
       email: authDto.email,
       hashedPassword,
     });
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   public async signinLocal(authDto: AuthDto): Promise<Tokens> {
-    const user = await this.userService.findUserByEmail(authDto.email);
+    const user = await this.usersService.findUserByEmail(authDto.email);
     if (!user) {
       throw new BadRequestException('User does not exist');
     }
@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   public async logout(userId: number): Promise<boolean> {
-    const user = this.userService.updateUser({
+    const user = this.usersService.updateUser({
       id: userId,
       hashedRefreshToken: null,
     });
