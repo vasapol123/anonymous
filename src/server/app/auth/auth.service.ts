@@ -1,16 +1,10 @@
-import {
-  Injectable,
-  ForbiddenException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import * as argon2 from 'argon2';
 
 import { TokensService } from '../tokens/tokens.service';
 import { UsersService } from '../users/users.service';
 import { AuthDto } from './dto/auth.dto';
 import { Tokens } from '../tokens/interface/tokens.interface';
-import { GetCurrentUserId } from '../../common/decorator/get-current-user-id.decorator';
-import { GetCurrentUser } from 'src/server/common/decorator/get-current-user.decorator';
 
 @Injectable()
 export class AuthService {
