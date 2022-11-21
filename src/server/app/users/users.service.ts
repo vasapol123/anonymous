@@ -44,7 +44,17 @@ export class UsersService {
     return user;
   }
 
-  public async getUser(userId: number): Promise<User> {
+  public async findUserByEmail(email: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    return user;
+  }
+
+  public async findUserById(userId: number): Promise<User> {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userId,
@@ -54,7 +64,7 @@ export class UsersService {
     return user;
   }
 
-  public async getUsers(userIds: Array<number>): Promise<Array<User>> {
+  public async findUsersByIds(userIds: Array<number>): Promise<Array<User>> {
     const users = await this.prisma.user.findMany({
       where: {
         id: { in: userIds },

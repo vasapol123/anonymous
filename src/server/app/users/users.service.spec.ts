@@ -104,15 +104,21 @@ describe('UsersService', () => {
     });
   });
 
-  describe('getUser', () => {
+  describe('findUserByEmail', () => {
     it('should get a single user', () => {
-      expect(service.getUser(Date.now())).resolves.toEqual(user);
+      expect(service.findUserByEmail(user.email)).resolves.toEqual(user);
     });
   });
 
-  describe('getUsers', () => {
+  describe('findUserById', () => {
+    it('should get a single user', () => {
+      expect(service.findUserById(Date.now())).resolves.toEqual(user);
+    });
+  });
+
+  describe('findUsersByIds', () => {
     it('should return an array of users', () => {
-      expect(service.getUsers([Date.now(), Date.now()])).resolves.toEqual(
+      expect(service.findUsersByIds([Date.now(), Date.now()])).resolves.toEqual(
         userArray,
       );
     });
