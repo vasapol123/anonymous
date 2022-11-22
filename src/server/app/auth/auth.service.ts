@@ -10,7 +10,7 @@ import { Tokens } from '../tokens/interface/tokens.interface';
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly tokenService: TokensService,
+    private readonly tokensService: TokensService,
   ) {}
 
   public async signupLocal(authDto: AuthDto): Promise<Tokens> {
@@ -21,8 +21,11 @@ export class AuthService {
       hashedPassword,
     });
 
-    const tokens = await this.tokenService.getTokens(user.id, user.email);
-    await this.tokenService.updateRefreshToken(user.id, tokens.jwtRefreshToken);
+    const tokens = await this.tokensService.getTokens(user.id, user.email);
+    await this.tokensService.updateRefreshToken(
+      user.id,
+      tokens.jwtRefreshToken,
+    );
 
     return tokens;
   }
@@ -41,14 +44,17 @@ export class AuthService {
       throw new BadRequestException('Password invalid');
     }
 
-    const tokens = await this.tokenService.getTokens(user.id, user.email);
-    await this.tokenService.updateRefreshToken(user.id, tokens.jwtRefreshToken);
+    const tokens = await this.tokensService.getTokens(user.id, user.email);
+    await this.tokensService.updateRefreshToken(
+      user.id,
+      tokens.jwtRefreshToken,
+    );
 
     return tokens;
   }
 
   public async logout(userId: number): Promise<boolean> {
-    const user = this.usersService.updateUser({
+    const user = await this.usersService.updateUser({
       id: userId,
       hashedRefreshToken: null,
     });
