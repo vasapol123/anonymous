@@ -22,7 +22,7 @@ describe('TokensService', () => {
 
   const mockPrismaService = {
     user: {
-      update: jest.fn().mockImplementation(() => null),
+      update: jest.fn(),
       findUnique: jest.fn().mockResolvedValue(user),
     },
   };
@@ -38,6 +38,10 @@ describe('TokensService', () => {
           return Promise.resolve(hashedRefreshToken === refreshToken);
         },
       );
+  });
+
+  afterEach(async () => {
+    jest.clearAllMocks();
   });
 
   beforeEach(async () => {
@@ -61,8 +65,8 @@ describe('TokensService', () => {
   });
 
   describe('getTokens', () => {
-    it('should create tokens and return those', () => {
-      expect(service.getTokens(Date.now(), user.email)).resolves.toEqual({
+    it('should create tokens and return those', async () => {
+      await expect(service.getTokens(Date.now(), user.email)).resolves.toEqual({
         jwtAccessToken: expect.any(String),
         jwtRefreshToken: expect.any(String),
       });
@@ -77,8 +81,8 @@ describe('TokensService', () => {
   });
 
   describe('rotateRefreshToken', () => {
-    it('should successfully retotate refresh token', () => {
-      expect(
+    it('should successfully retotate refresh token', async () => {
+      await expect(
         service.rotateRefreshTokens(Date.now(), 'fakeRefreshToken'),
       ).resolves.toEqual({
         jwtAccessToken: expect.any(String),
@@ -89,8 +93,8 @@ describe('TokensService', () => {
       expect(mockPrismaService.user.update).toHaveBeenCalledTimes(1);
     });
 
-    it('should throw an error when fail verifying refresh token', () => {
-      expect(
+    it('should throw an error when fail verifying refresh token', async () => {
+      await expect(
         service.rotateRefreshTokens(Date.now(), 'wrongRefreshToken'),
       ).rejects.toThrowError(ForbiddenException);
     });
