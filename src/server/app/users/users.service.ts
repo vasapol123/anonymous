@@ -34,14 +34,25 @@ export class UsersService {
   public async updateUser(updateUserDto: UpdateUserDto): Promise<User> {
     const data = omit(updateUserDto, 'id');
 
-    const user = await this.prisma.user.update({
-      where: {
-        id: updateUserDto.id,
-      },
-      data,
-    });
+    try {
+      const user = await this.prisma.user.update({
+        where: {
+          id: updateUserDto.id,
+        },
+        data,
+      });
 
-    return user;
+      return user;
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          throw new ForbiddenException(
+            'An operation failed because user does not exist',
+          );
+        }
+      }
+      throw e;
+    }
   }
 
   public async findUserByEmail(email: string): Promise<User> {
