@@ -49,6 +49,6 @@ export class AuthController {
     @GetCurrentUserId() userId: number,
     @GetCurrentUser('refreshToken') refreshToken: string,
   ): Promise<Tokens> {
-    return this.tokensService.rotateRefreshTokens(userId, refreshToken);
+    return this.authService.rotateRefreshTokens(userId, refreshToken);
   }
 }
