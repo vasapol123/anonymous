@@ -28,7 +28,20 @@ services:
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: db
+      POSTGRES_DB: dev
+    networks:
+      - nest-network
+
+  test-db:
+    container_name: test_pg_container
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: test
     networks:
       - nest-network
 
