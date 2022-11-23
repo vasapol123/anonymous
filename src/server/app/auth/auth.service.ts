@@ -60,4 +60,11 @@ export class AuthService {
     });
     return !!user;
   }
+
+  public async rotateRefreshTokens(
+    userId: number,
+    refreshToken: string,
+  ): Promise<Tokens> {
+    return this.tokensService.rotateRefreshTokens(userId, refreshToken);
+  }
 }
